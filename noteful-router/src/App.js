@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import './App.css';
 import SideFolders from './SideFolders/SideFolders';
 import NoteList from './NoteList/NoteList';
+import Note from './Note/Note';
 import dummyStore from './dummy-store';
 
 class App extends Component {
@@ -38,11 +39,21 @@ class App extends Component {
           <Route 
             path='/folder/:folderId'
             render= {( props ) => {
+              
               return <NoteList
                 {...props}
                 noteProp={this.state.notes}
                 />}
               }
+          />
+          <Route
+            path='/note/:noteId'
+            render={(props) => {
+              return <Note
+              {...props}
+              noteProp={this.state.notes}
+              />
+            }}
           />
         </main>
       </div>

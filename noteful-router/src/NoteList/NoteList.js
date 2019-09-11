@@ -1,5 +1,6 @@
 import React from 'react';
 import './NoteList.css';
+import { Route, Link } from 'react-router-dom';
 //import { format } from 'date-fns'
 // import Note from './Note/Note';
 // import AddNote from './AddNote/AddNote';
@@ -19,10 +20,11 @@ export default function NoteList (props){
  const notes = filteredNotes.map((note, index) => {
     //const date = format(note.modified, 'DD MM YYYY')
     return (
-      <div className='noteItem' id={index} key={note.id}>
-        <h3>{note.name}</h3>
-        <p>Date modified: {note.modified} </p>
-      </div>
+        <div className='noteItem' id={index} key={note.id}>
+          <Link to={`/note/${note.id}`}>{note.name}</Link>
+          <p>Date modified: {note.modified} </p>
+        </div>
+      
     )
   })
 
