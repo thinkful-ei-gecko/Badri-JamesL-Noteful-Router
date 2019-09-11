@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
-import Header from './Header/Header';
 import SideFolders from './SideFolders/SideFolders';
 import NoteList from './NoteList/NoteList';
 import dummyStore from './dummy-store';
@@ -19,12 +19,32 @@ class App extends Component {
   }
 
   render() {
-    
+    //<NoteList notes={this.state.notes} />
     return (
       <div className="App">
-        <Header />
-        <SideFolders folders={this.state.folders} />
-        <NoteList notes={this.state.notes} />
+        <header className="App-header">
+          <Link to='/'>Noteful</Link>
+        </header>
+
+        <main>
+          <SideFolders folders={this.state.folders} />
+          <Route 
+            exact path='/'
+            render= {() => {
+              return <NoteList 
+                noteProp={this.state.notes}/>}
+              }
+            />
+          <Route 
+            path='/folder/:folderId'
+            render= {( props ) => {
+              return <NoteList
+                {...props}
+                noteProp={this.state.notes}
+                />}
+              }
+          />
+        </main>
       </div>
     );
   };

@@ -1,0 +1,16 @@
+.sideBar  {
+    padding: 5px;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+
+}
+
+nav:nth-child(even) {
+    background-color: gainsboro;
+}
+
+nav {
+    padding: 5px;
+    width: 90px;
+}

@@ -1,4 +1,16 @@
 .App-header {
   text-align: center;
+  background-color: lightblue;
+  padding: 25px;
+  font-size: 30px;
 }
 
+.App-header>a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+}
