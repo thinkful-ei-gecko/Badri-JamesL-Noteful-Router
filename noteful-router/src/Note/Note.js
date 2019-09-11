@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Route, Link } from 'react-router-dom';
 
 export default function Note (props) {
   if(props.noteProp.length === 0){
@@ -10,7 +10,7 @@ export default function Note (props) {
     })
   return (
     <div>
-      <h3>{selectedNote.name}</h3>
+      <Link to ='/'>{selectedNote.name}</Link>
       <p>Date Modified: {selectedNote.modified}</p>
       <p>{selectedNote.content}</p>
     </div>
