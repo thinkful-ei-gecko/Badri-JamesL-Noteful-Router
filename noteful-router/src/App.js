@@ -4,36 +4,90 @@ import './App.css';
 import SideFolders from './SideFolders/SideFolders';
 import NoteList from './NoteList/NoteList';
 import Note from './Note/Note';
-import dummyStore from './dummy-store';
+import NotefulContext from "./NotefulContext";
 
 class App extends Component {
-  state = {
-    notes: [],
-    folders: []
+
+  static contextType = NotefulContext;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      folders: [],
+      notes: []
+    };
   }
 
-  componentDidMount () {
+  handleDeleteNote = noteId => {
+    const newNotes = this.state.notes.filter(note => note.id !== noteId);
     this.setState({
-      notes: dummyStore.notes,
-      folders: dummyStore.folders
+      notes: newNotes
     })
   }
 
+  getFolders() {
+    fetch(`http://localhost:9090/folders`, {
+      method: 'GET',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      this.setState({
+        folders: data
+      })
+    })
+    .catch(error => alert(error))
+  }
+
+  getNotes() {
+    fetch(`http://localhost:9090/notes`, {
+      method: 'GET',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      this.setState({
+        notes: data
+      })
+    })
+    .catch(error => alert(error))
+  }
+
+  componentDidMount() {
+    this.getNotes();
+    this.getFolders();
+  }
+
   render() {
-    //<NoteList notes={this.state.notes} />
-    return (
+    const contextValue = {
+      folders: this.state.folders,
+      notes: this.state.notes,
+      deleteNote: this.handleDeleteNote,
+    };
+
+   return (
+    <NotefulContext.Provider value = {contextValue}>
       <div className="App">
         <header className="App-header">
           <Link to='/'>Noteful</Link>
         </header>
 
         <main>
-          <SideFolders folders={this.state.folders} />
+          <SideFolders folders={contextValue.folders} />
           <Route 
             exact path='/'
             render= {() => {
               return <NoteList 
-                noteProp={this.state.notes}/>}
+                noteProp={contextValue.notes}/>}
               }
             />
           <Route 
@@ -42,7 +96,7 @@ class App extends Component {
               
               return <NoteList
                 {...props}
-                noteProp={this.state.notes}
+                noteProp={contextValue.notes}
                 />}
               }
           />
@@ -51,12 +105,13 @@ class App extends Component {
             render={(props) => {
               return <Note
               {...props}
-              noteProp={this.state.notes}
+              noteProp={contextValue.notes}
               />
             }}
           />
         </main>
       </div>
+    </NotefulContext.Provider>
     );
   };
 };

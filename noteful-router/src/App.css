@@ -11,6 +11,9 @@
   cursor: pointer;
 }
 
+.App-header>a:hover {
+  font-size: 35px;
+}
 main {
   display: flex;
 }

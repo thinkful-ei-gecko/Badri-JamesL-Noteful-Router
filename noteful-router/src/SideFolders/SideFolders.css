@@ -6,10 +6,6 @@
 
 }
 
-nav:nth-child(even) {
-    background-color: gainsboro;
-}
-
 nav {
     padding: 5px;
     width: 90px;

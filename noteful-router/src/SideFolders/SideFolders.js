@@ -1,23 +1,17 @@
 import React from 'react';
 import './SideFolders.css';
-import { Route, Link } from 'react-router-dom';
-// import AddFolders from './AddFolders/AddFolders';
+import { Link } from 'react-router-dom';
+import NotefulContext from "../NotefulContext";
 
-export default class SideFolders extends React.Component {
-  
-  render(){
-    const folders = this.props.folders.map((folder, index) => {
+export default function SideFolders (props) {
       return (
-        <nav className="sideBarItem" key={index}>
-          <Link to={`/folder/${folder.id}`}>{folder.name}</Link>
-        </nav>
+
+        <NotefulContext.Consumer>
+          {({folders}) => (
+            <nav className="sideBar">
+              {folders.map(folder => <nav className='sideBarItem'><Link to={`/folder/${folder.id}`}>{folder.name}</Link></nav>)}
+            </nav>
+        )}
+        </NotefulContext.Consumer>
       )
-    })
-    return (
-      
-      <div className='sideBar'>
-        {folders}
-      </div>
-    )
   }
-}
